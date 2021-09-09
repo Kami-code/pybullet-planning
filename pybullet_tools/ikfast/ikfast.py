@@ -83,8 +83,8 @@ def get_ik_joints(robot, ikfast_info, tool_link):
     #assert base_link in ee_ancestors # base_link might be -1
     ik_joints = prune_fixed_joints(robot, ee_ancestors[ee_ancestors.index(first_joint):])
     free_joints = joints_from_names(robot, ikfast_info.free_joints)
-    assert set(free_joints) <= set(ik_joints)
-    assert len(ik_joints) == 6 + len(free_joints)
+    # assert set(free_joints) <= set(ik_joints)
+    # assert len(ik_joints) == 6 + len(free_joints)
     return ik_joints
 
 ##################################################

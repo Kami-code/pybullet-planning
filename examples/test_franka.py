@@ -14,9 +14,17 @@ from pybullet_tools.ikfast.ikfast import get_ik_joints, either_inverse_kinematic
 
 
 def test_retraction(robot, info, tool_link, distance=0.1, **kwargs):
+    # Get joints between base and ee
     ik_joints = get_ik_joints(robot, info, tool_link)
+    # get link state of robotid = robot and link_index = tool_link
+    """
+        start_pose  : the current 6D pose of tool_link
+        end_pose    : the target 6D pose of tool_link
+    """
     start_pose = get_link_pose(robot, tool_link)
     end_pose = multiply(start_pose, Pose(Point(z=-distance)))
+
+    # add debug line
     handles = [add_line(point_from_pose(start_pose), point_from_pose(end_pose), color=BLUE)]
     #handles.extend(draw_pose(start_pose))
     #handles.extend(draw_pose(end_pose))
@@ -52,7 +60,8 @@ def main():
     plane = p.loadURDF("plane.urdf")
     with LockRenderer():
         with HideOutput(True):
-            robot = load_pybullet(FRANKA_URDF, fixed_base=True)
+            print("../" + FRANKA_URDF)
+            robot = load_pybullet("../" + FRANKA_URDF, fixed_base=True)
             assign_link_colors(robot, max_colors=3, s=0.5, v=1.)
             #set_all_color(robot, GREEN)
     obstacles = [plane] # TODO: collisions with the ground
@@ -72,6 +81,7 @@ def main():
     for i in range(10):
         print('Iteration:', i)
         conf = sample_fn()
+        print("conf = ", conf)
         set_joint_positions(robot, joints, conf)
         wait_for_user()
         test_retraction(robot, info, tool_link, use_pybullet=False,
