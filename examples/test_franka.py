@@ -13,14 +13,8 @@ from pybullet_tools.ikfast.franka_panda.ik import PANDA_INFO, FRANKA_URDF
 from pybullet_tools.ikfast.ikfast import get_ik_joints, either_inverse_kinematics, check_ik_solver
 
 
-def test_retraction(robot, info, tool_link, distance=0.1, **kwargs):
-    # Get joints between base and ee
+def test_retraction(robot, info, tool_link, distance=1, **kwargs):
     ik_joints = get_ik_joints(robot, info, tool_link)
-    # get link state of robotid = robot and link_index = tool_link
-    """
-        start_pose  : the current 6D pose of tool_link
-        end_pose    : the target 6D pose of tool_link
-    """
     start_pose = get_link_pose(robot, tool_link)
     end_pose = multiply(start_pose, Pose(Point(z=-distance)))
 
@@ -84,7 +78,7 @@ def main():
         print("conf = ", conf)
         set_joint_positions(robot, joints, conf)
         wait_for_user()
-        test_retraction(robot, info, tool_link, use_pybullet=False,
+        test_retraction(robot, info, tool_link, use_pybullet=True,
                         max_distance=0.1, max_time=0.05, max_candidates=100)
     disconnect()
 
