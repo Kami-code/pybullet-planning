@@ -19,7 +19,7 @@ Caelan Reed Garrett. PyBullet Planning. https://pypi.org/project/pybullet-planni
 
 Install for macOS or Linux using: 
 
-<!-- `pybullet-planning$ git clone --recursive git@github.com:caelan/pybullet-planning.git` -->
+<!-- `pybullet_planning$ git clone --recursive git@github.com:caelan/pybullet_planning.git` -->
 ```
 $ git clone --recurse-submodules https://github.com/caelan/pybullet-planning.git
 $ cd pybullet-planning
@@ -42,7 +42,7 @@ Make sure to recursively update **pybullet-planning**'s submodules when pulling 
 ```
 pybullet-planning$ git pull --recurse-submodules
 ```
-<!-- `pybullet-planning$ git submodule update --init --recursive` -->
+<!-- `pybullet_planning$ git submodule update --init --recursive` -->
 
 ## IKFast Compilation
 
@@ -51,7 +51,7 @@ IKFast bindings are included for the following robots:
 * Franka Panda - `pybullet-planning$ (cd pybullet_tools/ikfast/franka_panda; python setup.py)`
 * MOVO - `pybullet-planning$ (cd pybullet_tools/ikfast/movo; python setup.py)`
 * PR2 - `pybullet-planning$ (cd pybullet_tools/ikfast/pr2; python setup.py)`
-<!-- `pybullet-planning$ ./setup_ikfast.sh` -->
+<!-- `pybullet_planning$ ./setup_ikfast.sh` -->
 
 <!-- https://stackoverflow.com/questions/10382141/temporarily-change-current-working-directory-in-bash-to-run-a-command -->
 
@@ -115,11 +115,11 @@ Heavily annotated simple example that demonstrates:
 &emsp;<img src="images/test_top.png" height="150"-->
 
 <!--
-* [OpenRAVE bodies](examples/test_kinbody.py) - ```pybullet-planning$ python -m examples.test_kinbody```
-* [Kiva shelves](examples/test_kiva.py) - ```pybullet-planning$ python -m examples.test_kiva```
-* [LIS/YCB models](examples/test_models.py) - ```pybullet-planning$ python -m examples.test_models```
-* [PR2 visibility](examples/test_visibility.py) - ```pybullet-planning$ python -m examples.test_visibility```
-* [TurtleBot collisions](examples/test_turtlebot.py) - ```pybullet-planning$ python -m examples.test_turtlebot```
+* [OpenRAVE bodies](examples/test_kinbody.py) - ```pybullet_planning$ python -m examples.test_kinbody```
+* [Kiva shelves](examples/test_kiva.py) - ```pybullet_planning$ python -m examples.test_kiva```
+* [LIS/YCB models](examples/test_models.py) - ```pybullet_planning$ python -m examples.test_models```
+* [PR2 visibility](examples/test_visibility.py) - ```pybullet_planning$ python -m examples.test_visibility```
+* [TurtleBot collisions](examples/test_turtlebot.py) - ```pybullet_planning$ python -m examples.test_turtlebot```
 -->
 
 ## PDDLStream Examples

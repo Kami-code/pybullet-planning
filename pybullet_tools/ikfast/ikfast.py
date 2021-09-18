@@ -207,6 +207,10 @@ def pybullet_inverse_kinematics(robot, ikfast_info, tool_link, world_from_target
 
 def either_inverse_kinematics(robot, ikfast_info, tool_link, world_from_target, fixed_joints=[],
                               use_pybullet=False, **kwargs):
+    print("fixed_joints", fixed_joints)
     if not use_pybullet and is_ik_compiled(ikfast_info):
+        print("use ikfast ik")
         return closest_inverse_kinematics(robot, ikfast_info, tool_link, world_from_target, fixed_joints=fixed_joints, **kwargs)
+    else:
+        print("use default pybullet ik")
     return pybullet_inverse_kinematics(robot, ikfast_info, tool_link, world_from_target, fixed_joints=[])

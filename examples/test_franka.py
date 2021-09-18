@@ -23,7 +23,7 @@ def test_retraction(robot, info, tool_link, distance=1, **kwargs):
     #handles.extend(draw_pose(start_pose))
     #handles.extend(draw_pose(end_pose))
     path = []
-    pose_path = list(interpolate_poses(start_pose, end_pose, pos_step_size=0.01))
+    pose_path = list(interpolate_poses(start_pose, end_pose, pos_step_size=0.1))
     for i, pose in enumerate(pose_path):
         print('Waypoint: {}/{}'.format(i+1, len(pose_path)))
         handles.extend(draw_pose(pose))

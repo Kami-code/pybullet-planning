@@ -14,7 +14,7 @@ from pybullet_tools.ikfast.ikfast import get_ik_joints, either_inverse_kinematic
 
 
 def test_retraction(robot, info, tool_link, distance=0.1, **kwargs):
-    # Get joints between base and ee
+    # Get joints between base and eeu
     ik_joints = get_ik_joints(robot, info, tool_link)
     start_pose = get_link_pose(robot, tool_link)
     end_pose = multiply(start_pose, Pose(Point(z=-distance)))
@@ -26,6 +26,7 @@ def test_retraction(robot, info, tool_link, distance=0.1, **kwargs):
     for i, pose in enumerate(pose_path):
         print('Waypoint: {}/{}'.format(i+1, len(pose_path)))
         handles.extend(draw_pose(pose))
+        print("pose = ", pose)
         conf = next(either_inverse_kinematics(robot, info, tool_link, pose, **kwargs), None)
         if conf is None:
             print('Failure!')
