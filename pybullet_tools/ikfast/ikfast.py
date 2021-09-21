@@ -38,6 +38,7 @@ def is_ik_compiled(ikfast_info):
         import_ikfast(ikfast_info)
         return True
     except ImportError:
+        print(ImportError)
         return False
 
 
@@ -201,13 +202,17 @@ def pybullet_inverse_kinematics(robot, ikfast_info, tool_link, world_from_target
     solutions = multiple_sub_inverse_kinematics(robot, first_joint, tool_link, world_from_target,
                                                 max_attempts=1, first_close=True, **kwargs)
     for solution in solutions: # TODO: sort by distance
-        set_configuration(robot, solution)
-        yield get_joint_positions(robot, ik_joints)
+
+        # set_configuration(robot, solution)
+        yield solution
+        # yield get_joint_positions(robot, ik_joints)
 
 
 def either_inverse_kinematics(robot, ikfast_info, tool_link, world_from_target, fixed_joints=[],
                               use_pybullet=False, **kwargs):
-    print("fixed_joints", fixed_joints)
+    # print("info = ", ikfast_info)
+    # print("is_ik_compiled(ikfast_info)", is_ik_compiled(ikfast_info))
+
     if not use_pybullet and is_ik_compiled(ikfast_info):
         print("use ikfast ik")
         return closest_inverse_kinematics(robot, ikfast_info, tool_link, world_from_target, fixed_joints=fixed_joints, **kwargs)

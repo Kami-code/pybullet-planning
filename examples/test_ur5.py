@@ -18,6 +18,12 @@ def test_retraction(robot, info, tool_link, distance=0.1, **kwargs):
     ik_joints = get_ik_joints(robot, info, tool_link)
     start_pose = get_link_pose(robot, tool_link)
     end_pose = multiply(start_pose, Pose(Point(z=-distance)))
+    print("start_pose = ", start_pose)
+    print("end_pose = ", end_pose)
+    print("robot = ", robot)
+    print("info = ", info)
+    print("tool_link = ", tool_link)
+    print("kwargs = ", kwargs)
 
     # add debug line
     handles = [add_line(point_from_pose(start_pose), point_from_pose(end_pose), color=BLUE)]

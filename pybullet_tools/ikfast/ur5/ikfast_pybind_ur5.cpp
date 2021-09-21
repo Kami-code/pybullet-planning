@@ -7,7 +7,7 @@
 #define IKFAST_HAS_LIBRARY
 #endif
 
-#include <ur5/ur_kinematics/ikfast.h>
+#include "./ur_kinematics/ikfast.h"
 
 #ifdef IKFAST_NAMESPACE
 using namespace IKFAST_NAMESPACE;

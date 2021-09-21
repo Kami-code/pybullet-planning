@@ -13,7 +13,7 @@ from pybullet_tools.ikfast.franka_panda.ik import PANDA_INFO, FRANKA_URDF
 from pybullet_tools.ikfast.ikfast import get_ik_joints, either_inverse_kinematics, check_ik_solver
 
 
-def test_retraction(robot, info, tool_link, distance=1, **kwargs):
+def test_retraction(robot, info, tool_link, distance=0.1, **kwargs):
     ik_joints = get_ik_joints(robot, info, tool_link)
     start_pose = get_link_pose(robot, tool_link)
     end_pose = multiply(start_pose, Pose(Point(z=-distance)))
@@ -23,7 +23,14 @@ def test_retraction(robot, info, tool_link, distance=1, **kwargs):
     #handles.extend(draw_pose(start_pose))
     #handles.extend(draw_pose(end_pose))
     path = []
-    pose_path = list(interpolate_poses(start_pose, end_pose, pos_step_size=0.1))
+
+    print("start_pose = ", start_pose)
+    print("end_pose = ", end_pose)
+    print("robot = ", robot)
+    print("info = ", info)
+    print("tool_link = ", tool_link)
+    print("kwargs = ", kwargs)
+    pose_path = list(interpolate_poses(start_pose, end_pose, pos_step_size=0.01))
     for i, pose in enumerate(pose_path):
         print('Waypoint: {}/{}'.format(i+1, len(pose_path)))
         handles.extend(draw_pose(pose))
@@ -78,7 +85,7 @@ def main():
         print("conf = ", conf)
         set_joint_positions(robot, joints, conf)
         wait_for_user()
-        test_retraction(robot, info, tool_link, use_pybullet=True,
+        test_retraction(robot, info, tool_link, use_pybullet=False,
                         max_distance=0.1, max_time=0.05, max_candidates=100)
     disconnect()
 

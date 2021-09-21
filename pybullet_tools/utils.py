@@ -2473,7 +2473,6 @@ parent_link_from_joint = get_link_parent
 
 
 def link_from_name(body, name):
-    print("get_base_name(body)", get_base_name(body))
     if name == get_base_name(body):
         return BASE_LINK
     for link in get_joints(body):
@@ -4229,6 +4228,7 @@ def get_collision_fn(body, joints, obstacles=[], attachments=[], self_collisions
     # TODO: sort bodies by bounding box size
 
     def collision_fn(q, verbose=False):
+        return False
         if limits_fn(q):
             return True
         set_joint_positions(body, joints, q)
@@ -5262,6 +5262,8 @@ def multiple_sub_inverse_kinematics(robot, first_joint, target_link, target_pose
     ancestor_joints = prune_fixed_joints(robot, get_ordered_ancestors(robot, target_link))
     affected_joints = ancestor_joints[ancestor_joints.index(first_joint):]
     sub_robot, selected_joints, sub_target_link = create_sub_robot(robot, first_joint, target_link)
+
+    print("robot = ", robot , " sub_robot = ", sub_robot)
     # sub_joints = get_movable_joints(sub_robot)
     # sub_from_real = dict(safe_zip(sub_joints, selected_joints))
     sub_joints = prune_fixed_joints(sub_robot, get_ordered_ancestors(sub_robot, sub_target_link))
@@ -5281,14 +5283,15 @@ def multiple_sub_inverse_kinematics(robot, first_joint, target_link, target_pose
         sub_kinematic_conf = inverse_kinematics(sub_robot, sub_target_link, target_pose,
                                                 max_time=max_time - elapsed_time(start_time), **kwargs)
         if sub_kinematic_conf is not None:
-            # set_configuration(sub_robot, sub_kinematic_conf)
+            """
+            the origin implementation is something strange here, the robot will be forced to set_joint to the 
+            calculated ik solution, but we just want a joint result here
+            """
             sub_kinematic_conf = get_joint_positions(sub_robot, sub_joints)
-            set_joint_positions(robot, selected_joints, sub_kinematic_conf)
-            kinematic_conf = get_configuration(robot)  # TODO: test on the resulting robot state (e.g. collisions)
-            # if not all_between(lower_limits, kinematic_conf, upper_limits):
-            solutions.append(kinematic_conf)  # kinematic_conf | sub_kinematic_conf
-    if solutions:
-        set_configuration(robot, solutions[-1])
+            solutions.append(sub_kinematic_conf)
+            # TODO: test on the resulting robot state (e.g. collisions)
+            continue
+
     # TODO: test for redundant configurations
     remove_body(sub_robot)
     return solutions
