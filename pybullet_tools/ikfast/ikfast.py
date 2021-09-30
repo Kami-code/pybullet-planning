@@ -38,7 +38,6 @@ def is_ik_compiled(ikfast_info):
         import_ikfast(ikfast_info)
         return True
     except ImportError:
-        print(ImportError)
         return False
 
 
@@ -217,5 +216,5 @@ def either_inverse_kinematics(robot, ikfast_info, tool_link, world_from_target, 
         print("use ikfast ik")
         return closest_inverse_kinematics(robot, ikfast_info, tool_link, world_from_target, fixed_joints=fixed_joints, **kwargs)
     else:
-        print("use default pybullet ik")
-    return pybullet_inverse_kinematics(robot, ikfast_info, tool_link, world_from_target, fixed_joints=[])
+        # print("use default pybullet ik")
+        return pybullet_inverse_kinematics(robot, ikfast_info, tool_link, world_from_target, fixed_joints=[])
