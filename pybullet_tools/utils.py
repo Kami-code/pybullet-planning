@@ -5262,8 +5262,6 @@ def multiple_sub_inverse_kinematics(robot, first_joint, target_link, target_pose
     ancestor_joints = prune_fixed_joints(robot, get_ordered_ancestors(robot, target_link))
     affected_joints = ancestor_joints[ancestor_joints.index(first_joint):]
     sub_robot, selected_joints, sub_target_link = create_sub_robot(robot, first_joint, target_link)
-
-    print("robot = ", robot , " sub_robot = ", sub_robot)
     # sub_joints = get_movable_joints(sub_robot)
     # sub_from_real = dict(safe_zip(sub_joints, selected_joints))
     sub_joints = prune_fixed_joints(sub_robot, get_ordered_ancestors(sub_robot, sub_target_link))
