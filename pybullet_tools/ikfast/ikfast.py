@@ -83,6 +83,8 @@ def get_ik_joints(robot, ikfast_info, tool_link):
     #assert base_link in ee_ancestors # base_link might be -1
     ik_joints = prune_fixed_joints(robot, ee_ancestors[ee_ancestors.index(first_joint):])
     free_joints = joints_from_names(robot, ikfast_info.free_joints)
+    print("ik_joints", ik_joints)
+    print("free_joints", free_joints)
     assert set(free_joints) <= set(ik_joints)
     assert len(ik_joints) == 6 + len(free_joints)
     return ik_joints
@@ -160,6 +162,7 @@ def ikfast_inverse_kinematics(robot, ikfast_info, tool_link, world_from_target,
     for free_positions in generator:
         if max_time < elapsed_time(start_time):
             break
+        print("free_positions", free_positions)
         for conf in randomize(compute_inverse_kinematics(ikfast.get_ik, base_from_ee, free_positions)):
             #solution(robot, ik_joints, conf, tool_link, world_from_target)
             difference = difference_fn(current_conf, conf)

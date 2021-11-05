@@ -14,9 +14,9 @@ from pybullet_tools.ikfast.compile import compile_ikfast
 def main():
     # lib name template: 'ikfast_<robot name>'
     sys.argv[:] = sys.argv[:1] + ['build']
-    robot_name = 'ur5_arm'
+    robot_name = 'ur5'
     compile_ikfast(module_name='ikfast_{}'.format(robot_name),
-                   cpp_filename='ikfast_pybind_ur5.cpp')
+                   cpp_filename='ikfast_{}.cpp'.format(robot_name), remove_build=True)
 
 if __name__ == '__main__':
     main()

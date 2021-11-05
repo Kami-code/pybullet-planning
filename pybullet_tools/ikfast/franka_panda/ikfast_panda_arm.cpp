@@ -22,7 +22,7 @@
 //// Make sure the version number matches.
 //// You might need to install the dev version to get the header files.
 //// sudo apt-get install python3.4-dev
-#include "Python.h"
+#include <Python.h>
 //// END
 
 #define IKFAST_HAS_LIBRARY
