@@ -9,7 +9,7 @@ from pybullet_tools.utils import add_data_path, connect, dump_body, disconnect, 
     multiply, Pose, Point, interpolate_poses, HideOutput, draw_pose, set_camera_pose, load_pybullet, \
     assign_link_colors, add_line, point_from_pose, remove_handles, BLUE
 
-from pybullet_tools.ikfast.ur5.ik import UR5_INFO, UR5_URDF
+from pybullet_tools.ikfast.flexiv.ik import FLEXIV_INFO, FLEXIV_URDF
 from pybullet_tools.ikfast.ikfast import get_ik_joints, either_inverse_kinematics, check_ik_solver
 
 
@@ -18,12 +18,12 @@ def test_retraction(robot, info, tool_link, distance=0.1, **kwargs):
     ik_joints = get_ik_joints(robot, info, tool_link)
     start_pose = get_link_pose(robot, tool_link)
     end_pose = multiply(start_pose, Pose(Point(z=-distance)))
-    # print("start_pose = ", start_pose)
-    # print("end_pose = ", end_pose)
-    # print("robot = ", robot)
-    # print("info = ", info)
-    # print("tool_link = ", tool_link)
-    # print("kwargs = ", kwargs)
+    print("start_pose = ", start_pose)
+    print("end_pose = ", end_pose)
+    print("robot = ", robot)
+    print("info = ", info)
+    print("tool_link = ", tool_link)
+    print("kwargs = ", kwargs)
 
     # add debug line
     handles = [add_line(point_from_pose(start_pose), point_from_pose(end_pose), color=BLUE)]
@@ -60,8 +60,8 @@ def main():
     plane = p.loadURDF("plane.urdf")
     with LockRenderer():
         with HideOutput(True):
-            print("../" + UR5_URDF)
-            robot = load_pybullet("../" + UR5_URDF, fixed_base=True)
+            print("../" + FLEXIV_URDF)
+            robot = load_pybullet("../" + FLEXIV_URDF, fixed_base=True)
             assign_link_colors(robot, max_colors=3, s=0.5, v=1.)
             #set_all_color(robot, GREEN)
     obstacles = [plane] # TODO: collisions with the ground
@@ -70,15 +70,15 @@ def main():
     print('Start?')
     wait_for_user()
 
-    info = UR5_INFO
-    tool_link = link_from_name(robot, 'ee_link')
+    info = FLEXIV_INFO
+    tool_link = link_from_name(robot, 'link7')
     draw_pose(Pose(), parent=robot, parent_link=tool_link)
     joints = get_movable_joints(robot)
     print('Joints', [get_joint_name(robot, joint) for joint in joints])
     check_ik_solver(info)
 
     sample_fn = get_sample_fn(robot, joints)
-    for i in range(100):
+    for i in range(10):
         print('Iteration:', i)
         conf = sample_fn()
         print("conf = ", conf)
